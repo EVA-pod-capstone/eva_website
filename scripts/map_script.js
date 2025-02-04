@@ -83,8 +83,6 @@ var antennasCircle = new google.maps.Circle({
 
 }
 
-
-
 function drawOnclick() {
-  // alert("clicked");
+  alert("clicked");
 }
