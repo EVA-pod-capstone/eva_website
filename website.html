@@ -4,38 +4,31 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&amp;loading=async&amp;libraries=visualization&amp;callback=initMap" async="async" defer="defer"></script>
    <script src="./scripts/map_script.js"></script>
    <script src="./scripts/script.js"></script>
+   <link rel="stylesheet" href="./css/styles.css">
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
    <meta charset="utf-8">
    <title>Cicles</title>
-   <style>
-  html, body {
-     height: 100%;
-     margin: 0;
-     padding: 0;
-    }
-    #map {
-     height: 100%;
-    }
-   </style>
-
    <head>
 
 
 <body onload="init()">
-  <input id="Add EVA Pod" type="button" value="Add EVA Pod" onclick="drawOnclick();" />
-<div id="contentBox" style="margin:0px auto; width:70%; height:80%">
+  <div>
+    <h1>Environmental Variance Analyzer</h1>
+  <input id="add-eva-pod" type="button" value="Add EVA Pod" onclick="drawOnclick();"/>
+  </div>
+  <div id="contentBox" style="margin:0px auto; width:100%; height:80%">
 
     <!-- columns divs, float left, no margin so there is no space between column, width=1/3 -->
-       <div id="map" style="float:left; margin:0; width:50%;">
+       <div id="map" class="column">
         
        </div>
    
-       <div id="data-manager" style="float:left; margin:0;width:50%;">
+       <div id="data-manager" class="column">
         <input id="fileInput" type="file" name="file" />
   <pre id="fileContent"></pre>
        </div>
-   
    </div>
+
 
 </body>
 </html>

@@ -1,0 +1,38 @@
+h1 {
+    font-family: 'Times New Roman', Times, serif;
+    background-color: #b4f7b4;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#map {
+    height: 100%;
+}
+
+#add-eva-pod {
+    margin: 10px;
+    background-color: blue;
+    color: white;
+}
+
+#add-eva-pod:hover {
+    margin: 10px;
+    background-color: rgb(131, 11, 201);
+    color: white;
+}
+
+#add-eva-pod:click {
+    margin: 10px;
+    background-color: rgb(98, 10, 149);
+    color: white;
+}
+
+.column {
+    margin: 20px;
+    float: left;
+    width: 45%;
+}
