@@ -25,9 +25,9 @@ html, body {
     color: white;
 }
 
-#add-eva-pod:click {
+#add-eva-pod:active {
     margin: 10px;
-    background-color: rgb(98, 10, 149);
+    background-color: rgb(71, 7, 108);
     color: white;
 }
 
