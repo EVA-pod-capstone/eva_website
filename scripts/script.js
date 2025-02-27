@@ -17,9 +17,10 @@ function init() {
 
     //<canvas id="myChart" style="width:100%;max-width:700px"></canvas>
     let graph_div = document.getElementById('graphs-container');
+    graph_div.innerHTML = '';
     for (let j=1; j<headers.length; j++) {
       let name = headers[j];
-      let new_chart = document.createElement('canvas');
+      let new_chart = document.createElement('div');
       new_chart.setAttribute('id', 'myChart'+name);
       graph_div.appendChild(new_chart);
 
@@ -30,25 +31,26 @@ function init() {
         xValues.push(array[0])
         yValues.push(array[j])
       }
-      const myChart = new Chart("myChart"+name, {
-        type: "line",
-        data: {
-          labels: xValues,
-          datasets: [{
-            // backgroundColor:"rgba(0,0,255,1.0)",
-            borderColor: "rgba(13, 13, 118, 0.8)",
-            data: yValues,
-            fill: false
-          }]
+      var trace = {
+        x: xValues,
+        y: yValues,
+        mode: 'lines+markers',
+        marker: {
+          color: 'rgb(75, 0, 128)',
+          size: 8
         },
-        options: {
-          legend: {display: false},
-          title: {
-            display: true,
-            text: name
-          }
+        line: {
+          color: 'rgb(75, 0, 128)',
+          width: 1
         }
-      });
+      };
+     
+
+      var layout = {
+        title: {text: name}
+      };
+      Plotly.newPlot('myChart'+name, [trace], layout);
+
   }
 
     // let new_options = `<p>Select variable to plot</p>
