@@ -12,33 +12,44 @@ function init() {
     console.log(event);
     //document.getElementById('fileContent').textContent = event.target.result;
     let data = event.target.result;
-    //<canvas id="myChart" style="width:100%;max-width:700px"></canvas>
-    let graph_div = document.getElementById('graphs-container');
-    let new_chart = document.createElement('canvas');
-    new_chart.setAttribute('id', 'myChart');
-    graph_div.appendChild(new_chart);
-
-    let xValues = []
-    let yValues = []
     let lines = data.split('\n');
     let headers = lines[0].split(",");
-    for (let i = 1; i < lines.length; i++) {
-      let array = lines[i].split(",")
-      xValues.push(array[0])
-      yValues.push(array[1])
-    }
-    const myChart = new Chart("myChart", {
-      type: "line",
-      data: {
-        labels: xValues,
-        datasets: [{
-          // backgroundColor:"rgba(0,0,255,1.0)",
-          borderColor: "rgba(0,0,255,0.1)",
-          data: yValues
-        }]
-      },
-      options: {}
-    });
+
+    //<canvas id="myChart" style="width:100%;max-width:700px"></canvas>
+    let graph_div = document.getElementById('graphs-container');
+    for (let j=1; j<headers.length; j++) {
+      let name = headers[j];
+      let new_chart = document.createElement('canvas');
+      new_chart.setAttribute('id', 'myChart'+name);
+      graph_div.appendChild(new_chart);
+
+      let xValues = []
+      let yValues = []
+      for (let i = 1; i < lines.length; i++) {
+        let array = lines[i].split(",")
+        xValues.push(array[0])
+        yValues.push(array[j])
+      }
+      const myChart = new Chart("myChart"+name, {
+        type: "line",
+        data: {
+          labels: xValues,
+          datasets: [{
+            // backgroundColor:"rgba(0,0,255,1.0)",
+            borderColor: "rgba(13, 13, 118, 0.8)",
+            data: yValues,
+            fill: false
+          }]
+        },
+        options: {
+          legend: {display: false},
+          title: {
+            display: true,
+            text: name
+          }
+        }
+      });
+  }
 
     // let new_options = `<p>Select variable to plot</p>
     // <form>
