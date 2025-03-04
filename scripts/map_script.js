@@ -1,8 +1,11 @@
-// map variable in global scope
-const myLatLng = { lat: 39.7392, lng: -104.9903 };
+// map variables in global 
+ let NewLatLng      = { lat: 39.7392, lng: -104.9903 };      
+ let NewBorderColor = "#137333";                           
+ let NewFillColor   = "#137333";
+ let NewTitle       = "Denver, CO";
 
 var map;
-//Initialise la map
+//Initialize the Map
 async function initMap() {
    const { Map, InfoWindow } = await google.maps.importLibrary("maps");
    const { AdvancedMarkerElement , PinElement } = await google.maps.importLibrary("marker");
@@ -20,33 +23,23 @@ async function initMap() {
 
   const infoWindow = new InfoWindow();
 
-//MARKER DENVER
-
+//Custom Marker for new pod
 //pin for clicking
-const pinDenver = new PinElement({
-    scale: 1.5,
-    borderColor: "#137333",
-  });
-
-const markerDenver = new AdvancedMarkerElement({
-      position: myLatLng,
-      map,
-      title: "Denver, CO",
-      content: pinDenver.element,
+function pinCreation(pinData) {
+  if (pinData.lat && pinData.lng) {
+    const markerNewPod = new AdvancedMarkerElement({
+      position: { lat: parseFloat(pinData.lat), lng: parseFloat(pinData.lng) },
+      map: map, 
+      title: pinData.name,
+      content: pinData.description,
       gmpClickable: true,
     });
-
-    //google.maps.event.addListener(markerDenver, 'click', function() {window.location.href = marker.url;});
-
-//LISTENER
-markerDenver.addListener("click", ({ domEvent, myLatLng }) => {
-const { target } = domEvent;
-
-infoWindow.close();
-infoWindow.setContent(markerDenver.title);
-infoWindow.open(markerDenver.map, markerDenver);
-});
-
+  }
+}
+// this is only going to work when a new marker pod is created. Once another is created, it will be inaccessable. 
+// find solution after finishing the data structuring. 
+google.maps.event.addListener(markerNewPod, 'click', function() {window.location.href = marker.url;});
+  }// Why do you end initMap here, and then restart it a line later? 
 initMap;
 
 // AIR QUALITY
@@ -58,8 +51,8 @@ var antennasCircle = new google.maps.Circle({
     fillOpacity: 0.35,
     map: map,
     center: {
-      lat: 39.7392,
-      lng: -104.9903
+      lat: lat.parseFloat(pinData.lat),
+      lng: lng.parseFloat(pinData.lng)
     },
     radius: 1000
   });
@@ -74,15 +67,9 @@ var antennasCircle = new google.maps.Circle({
     fillOpacity: 0.35,
     map: map,
     center: {
-      lat: 39.7392,
-      lng: -104.9903
+      lat: lat.parseFloat(pinData.lat),
+      lng: lng.parseFloat(pinData.lng)
     },
     radius: 500
   });
-  initMap;
-
-}
-
-function drawOnclick() {
-  alert("clicked");
-}
+  initMap;// initMap here again? What is going on here? 
