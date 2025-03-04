@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <script src="https://cdn.plot.ly/plotly-3.0.0.min.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&amp;loading=async&amp;libraries=visualization&amp;callback=initMap" async="async" defer="defer"></script>
+
+   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&amp;loading=async&amp;libraries=visualization&amp;callback=initMap" async="async" defer="defer"></script>
    <script src="./scripts/map_script.js"></script>
    <script src="./scripts/script.js"></script>
+   <script src="./scripts/New_Pod.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+
    <link rel="stylesheet" href="./styles/styles.css">
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width,initial-scale=1.0, user-scalable=no">
+   <meta charset="UTF-8">
    <title>EVA</title>
    <link rel="icon" type="image/x-icon" href="./styles/eva.png">
-   <head>
+  </head>
 
 
 <body onload="init()">
@@ -32,6 +35,38 @@
        </div>
    </div>
 
+    <h1>Popup Code</h1>
+    <!-- Creates the Style of the Popup-->
+    <!---->
+    <style>
+      #popup {
+          display: none;
+          position: fixed;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          padding: 20px;
+          background-color: white;
+          border: 1px solid black;
+          box-shadow: 0 0 10px rgba(0,0,0,0.5);
+      }
+    </style>
+  <!--Start of New Pin Popup Code! -->
+  <!--Id is the id of the thin in Html (above). onclick is an event listener that will actually create the popup-->
+  <button id="openPopup" onclick = "PopupCreation()">Place New Pod</button>
+  <div id="popup" style="display: none;">
+      <label for="Lat">Latitude:</label>  <!--labels Latitude and creates Lat variable-->
+      <input type="text" id="Lat"><br>
+      <label for="Lng">Longitude:</label> <!--labels Longitude and creates Lng variable-->
+      <input type="text" id="Lng"><br>
+      <label for="Name">Name:</label>     <!--labels Name and creates Name variable-->
+      <input type="text" id="Name"><br>
+      <label for="Description">Description:</label> <!--labels Description and creates Description variable-->
+      <input type="text" id="Description"><br>
+      <button id="saveVars" onclick = "SavePodVars()">Save Data and Place</button>
+  </div>
 
 </body>
 </html>
+
+<!-- End of Andrew's Code! -->
