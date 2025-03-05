@@ -17,8 +17,13 @@ function init() {
 
     //<canvas id="myChart" style="width:100%;max-width:700px"></canvas>
     let graph_div = document.getElementById('graphs-container');
+
+    let lat_long = document.getElementById('location-display-from-file');
+    let array = lines[lines.length - 3].split(",");
+    lat_long.innerText = "Lat: " + array[1] + " Long: " + array[2];
+
     graph_div.innerHTML = '';
-    for (let j=1; j<headers.length; j++) {
+    for (let j=3; j<headers.length; j++) {
       let name = headers[j];
       let new_chart = document.createElement('div');
       new_chart.setAttribute('id', 'myChart'+name);
