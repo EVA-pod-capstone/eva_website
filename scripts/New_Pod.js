@@ -2,7 +2,6 @@
 // This file is used to create a new pod and save the location of the pod
 //---------------------------------------------------------------------------------//
 var podData = {};
-var Newlatlng = {};
 //The openPopup function, which is called in map_script.js, begins the opening of the popup. 
 function PopupCreation() {
     document.getElementById("popup").style.display = "block";
@@ -26,23 +25,24 @@ function SavePodVars() {
     console.log(podData);
 //Hides the Popup once you have pressed the save button.
     document.getElementById("popup").style.display = "none";
-    Newlatlng = {
-        lat: Lat, 
-        lng: Lng
-    };
+    
 
-    pinCreator(podData);
-}// The end of saveVars function
-
+    pinCreator(podData);// The end of saveVars function
+}
 //Creating a new pin on the map with the data from the popup. 
+//Commenting to create new function in map_script.js
+/*
 function pinCreator(podData) {
     if(podData.lat && podData.lng) {
-        const markerNewPod = new google.maps.Marker({
-                position: {lat: podData.lat, lng: podData.lng},
-            map: map,
-            title: podData.name, 
-            description: podData.description
-        });
+
+        const markerNewPod = new AdvancedMarkerElement({
+            position: { lat: parseFloat(podData.lat), lng: parseFloat(podData.lng) },
+            map: map, 
+            title: podData.name,
+            content: podData.description,
+            gmpClickable: true,
+          });
+
   
         const infoWindow = new google.maps.InfoWindow({
             content: `<h1>${podData.name}</h1><p>${podData.description}</p>`
@@ -55,3 +55,4 @@ function pinCreator(podData) {
     }
 
 } //The end of podCreator Function
+ */

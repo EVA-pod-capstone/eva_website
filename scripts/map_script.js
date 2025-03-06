@@ -3,15 +3,20 @@
  let NewBorderColor = "#137333";                           
  let NewFillColor   = "#137333";
  let NewTitle       = "Denver, CO";
+ //var AdvancedMarkerElement;
+ var PinElement;
+ var map;
+ var markerNewPod;
 
-var map;
+
 //Initialize the Map
 async function initMap() {
+  //request needed libraries 
    const { Map, InfoWindow } = await google.maps.importLibrary("maps");
    const { AdvancedMarkerElement , PinElement } = await google.maps.importLibrary("marker");
   // initialize the map variable
   map = new Map(document.getElementById("map"), {
-    center: {lat: 39.7392, lng: -104.9903},
+    center: {lat: 40, lng: -104},
     zoom: 10,
     mapId: '9c6265d2e2cffa4e',
     scrollwheel: true,
@@ -22,25 +27,34 @@ async function initMap() {
   });
 
   const infoWindow = new InfoWindow();
+}
 
 //Custom Marker for new pod
 //pin for clicking
-function pinCreation(pinData) {
-  if (pinData.lat && pinData.lng) {
-    const markerNewPod = new AdvancedMarkerElement({
-      position: { lat: parseFloat(pinData.lat), lng: parseFloat(pinData.lng) },
+function pinCreator(podData) {
+  if (podData.lat && podData.lng) {
+    const markerNewPod = new google.maps.marker.AdvancedMarkerElement({
+      position: { lat: parseFloat(podData.lat), lng: parseFloat(podData.lng) },
       map: map, 
-      title: pinData.name,
-      content: pinData.description,
+      title: podData.name,
+//      content: podData.description,
       gmpClickable: true,
     });
+
+    const infoWindow = new google.maps.InfoWindow({
+      content: `<h1>${podData.name}</h1><p>${podData.description}</p>`
+    });
+
+    markerNewPod.addListener('gmp-click', () => {
+      infoWindow.open(map, markerNewPod);
+    });
+    
+
   }
-}
+
 // this is only going to work when a new marker pod is created. Once another is created, it will be inaccessable. 
 // find solution after finishing the data structuring. 
-google.maps.event.addListener(markerNewPod, 'click', function() {window.location.href = marker.url;});
-  }// Why do you end initMap here, and then restart it a line later? 
-initMap;
+// google.maps.event.addListener(markerNewPod, 'click', function() {window.location.href = marker.url;});
 
 // AIR QUALITY
 var antennasCircle = new google.maps.Circle({
@@ -51,8 +65,8 @@ var antennasCircle = new google.maps.Circle({
     fillOpacity: 0.35,
     map: map,
     center: {
-      lat: lat.parseFloat(pinData.lat),
-      lng: lng.parseFloat(pinData.lng)
+      lat: parseFloat(podData.lat),
+      lng: parseFloat(podData.lng)
     },
     radius: 1000
   });
@@ -67,9 +81,11 @@ var antennasCircle = new google.maps.Circle({
     fillOpacity: 0.35,
     map: map,
     center: {
-      lat: lat.parseFloat(pinData.lat),
-      lng: lng.parseFloat(pinData.lng)
+      lat: parseFloat(podData.lat),
+      lng: parseFloat(podData.lng)
     },
     radius: 500
   });
-  initMap;// initMap here again? What is going on here? 
+  initMap;//Refreshes map? 
+}
+  
