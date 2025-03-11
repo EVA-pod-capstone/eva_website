@@ -7,6 +7,28 @@ function init() {
   }
 
 //This function begins the reading of the CSV file, and once the file is fully loaded into the site, send it to handleFileLoad
+
+//The openPopup function, which is called in map_script.js, begins the opening of the popup. 
+
+function PopupCreation() {
+    document.getElementById("popup").style.display = "block";
+}
+
+//Pulls saveVars from popup HTML file and saves the variables Lat and Lng.
+function SavePodVars() {
+    var Name = document.getElementById("Name").value; //Saves Name of the pod as Name
+    var Description = document.getElementById("Description").value; //Saves Description of the pod as Description
+
+    };
+//Places podData into the console for debugging purposes.
+    console.log(podData);
+//Hides the popup once the save button is pressed.
+    document.getElementById("popup").style.display = "none";
+//
+    pinCreator(???);// The end of saveVars function UPDATE WITH LAT LNG DATA
+}
+
+
 function handleFileSelect(event){
     const reader = new FileReader()
     reader.onload = handleFileLoad;
@@ -22,9 +44,6 @@ function handleFileLoad(event) {
     // Splits the file content into lines
     lines = data.split('\n');
 
-    // Read the name and description from the HTML Input fields
-    const Name = document.getElementById("Name").value;
-    const Description = document.getElementById("Description").value;
     // Initialize the podData object
     let podData = {
         name: Name,
@@ -66,7 +85,7 @@ function handleFileLoad(event) {
     const podDataString = JSON.stringify(podData);
 
     // Create a Blob from the JSON string
-    const blob = document.createElement('a');
+    const blob = new Blob([podDataString], { type: "application/json" });
 
     // Set the download attribute with a filename
     const link = document.createElement("a");
@@ -90,58 +109,12 @@ function handleFileLoad(event) {
 
     // Remove the link from the document
     document.body.removeChild(link);
-
     }
     
-//The openPopup function, which is called in map_script.js, begins the opening of the popup. 
 
-function PopupCreation() {
-    document.getElementById("popup").style.display = "block";
-}
 
-//Pulls saveVars from popup HTML file and saves the variables Lat and Lng.
-function SavePodVars() {
-    var Lat = document.getElementById("Lat").value; //Saves latitude as Lat
-    var Lng = document.getElementById("Lng").value; //Saves longitude as Lng
-    var Name = document.getElementById("Name").value; //Saves Name of the pod as Name
-    var Description = document.getElementById("Description").value; //Saves Description of the pod as Description
 
-// We can put other labels/variables here if we want to save more information. 
-// This is the data that will be saved to the database.
 
-    podData ={
-        name: Name,
-        description: Description,               
-        //Pod Identifiers
-//        MeasurementNumber: 1      dont know how to do this part yet... Gotta look online for some help
-        Time: Time,
-        Latitude: Lat,
-        Longitude: Lng,                         
-        //Data Identifiers
-        SoilHumidity: SHum,
-        SoilTemperature: STemp,
-        PH: PH,
-        SulfurBenzineAmmoniaMQ: SBA,
-        HydrogenMQ: H,
-        CarbonMonoxideMQ: CO,
-        MethaneMQ: Meth,                           
-        //Soil Data
-        AirHumidity: AHum,
-        AirTemperature: ATemp,
-        AirPressure: APress,
-        CarbonDioxide: CO2, 
-        Light:  Light,                         
-        //Air Data
-    };
-//Places podData into the console for debugging purposes.
-    console.log(podData);
-
-    
-    document.getElementById("popup").style.display = "none";
-    
-
-    pinCreator(podData);// The end of saveVars function
-}
 //Creating a new pin on the map with the data from the popup. 
 //Commenting to create new function in map_script.js
 /*
