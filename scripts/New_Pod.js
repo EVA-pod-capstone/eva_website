@@ -1,34 +1,14 @@
 // New_Pod.js
 // This file is used to create a new pod and save the location of the pod
 //---------------------------------------------------------------------------------//
-// Called in the HTML file, prepares the site to wait for a change in the file input.
-function init() {
-    document.getElementById('fileInput').addEventListener('change', handleFileSelect, false);
-  }
 
-//This function begins the reading of the CSV file, and once the file is fully loaded into the site, send it to handleFileLoad
 
 //The openPopup function, which is called in map_script.js, begins the opening of the popup. 
 
 function PopupCreation() {
     document.getElementById("popup").style.display = "block";
 }
-
-//Pulls saveVars from popup HTML file and saves the variables Lat and Lng.
-function SavePodVars() {
-    var Name = document.getElementById("Name").value; //Saves Name of the pod as Name
-    var Description = document.getElementById("Description").value; //Saves Description of the pod as Description
-
-    };
-//Places podData into the console for debugging purposes.
-    console.log(podData);
-//Hides the popup once the save button is pressed.
-    document.getElementById("popup").style.display = "none";
-//
-    pinCreator(???);// The end of saveVars function UPDATE WITH LAT LNG DATA
-}
-
-
+//This function begins the reading of the CSV file, and once the file is fully loaded into the site, send it to handleFileLoad
 function handleFileSelect(event){
     const reader = new FileReader()
     reader.onload = handleFileLoad;
@@ -37,7 +17,7 @@ function handleFileSelect(event){
 
 function handleFileLoad(event) {
     console.log(event);  // logs data in the console
-    document.getElementById('fileContent').textContent = event.target.result;
+    //document.getElementById('fileContent').textContent = event.target.result; //Displays the file content in the site
     data = event.target.result;   //Moves the data in the file (event.target.result) to data
     //Hides the Popup once you have pressed the save button.
     
@@ -110,6 +90,28 @@ function handleFileLoad(event) {
     // Remove the link from the document
     document.body.removeChild(link);
     }
+
+//Pulls saveVars from popup HTML file and saves the variables Lat and Lng.
+function SavePodVars(podData) {
+    var Name = document.getElementById("Name").value; //Saves Name of the pod as Name
+    var Description = document.getElementById("Description").value; //Saves Description of the pod as Description
+
+   
+//Places podData into the console for debugging purposes.
+    console.log(podData);
+//Hides the popup once the save button is pressed.
+    document.getElementById("popup").style.display = "none";
+//
+    pinCreator(podData);// The end of saveVars function UPDATE WITH LAT LNG DATA
+};
+
+// Called in the HTML file, prepares the site to wait for a change in the file input.
+function init() {
+    document.getElementById('fileInput').addEventListener('change', handleFileSelect, false);
+  }
+
+//This function begins the reading of the CSV file, and once the file is fully loaded into the site, send it to handleFileLoad
+
     
 
 
