@@ -21,3 +21,23 @@ Finally, the Graphing.js file will have a bunch of different buttons that you ca
 
 !!!IMPORTANT!!!
 (Maybe consider making this a drop down list, allowing them to plot anything against anything, and then have three buttons: New graph, Delete Graph, and Edit Graph. Consider later...)
+
+
+UPDATE 3/20
+(Thursday before srping break)
+Okay, New_Pod should be mostly finished, so this needs to turn into a true instruction manual. A few updates
+
+The doce now creates a .JSON file rather than an object, and that .JSON file is created here. The JSON file needs to have a unique name, so that it is ammendable, which means that we are using the Latitude and Longitude coordinates to name it, in the format of podData_Latidude_Longitude, where latitude and longitude are only the first 4 digits of the measurement. This should give us an error of roughly 15 feet in either direction, which should be enough for a phones gps to give with pretty solid consistency lat/long measurement. Nonetheless, the phone shouldn't have to take lat and long more than once in any location, so I am happy with this.
+
+The .JSON Files first two inputs are the name and description, which is used for the creation of a pod, and then the other inputs are in a list that incriments up by measurment number for every new series of measurements. Look at this image {  ![](JSONFormatting.png)  } to see what I mean. Okay, here goes the full descritpion of the code
+
+
+
+
+New_Pod Information
+
+Hello User! If you are reading this, you are working on server/backend code, and for that I am eternally sorry. Hopefully though, this will help you find the issue in the code, or how this code is not working with yours. 
+
+New_Pod.js was designed to allow the user to easily create a new pod on the map, and with it a seperate .JSON file for managing data within the server. 
+
+Our current setup is as follows. We have the EVA Pod (V1? The finished product from our Capstone), connected to a phone, which is then connected to the internet, or sent to a computer connected to the internet. The user will start by uploading time, lat and longitude to the EVA pod (only for the first measurments gathered, it is then stored in the pod). The EVA pod then outputs a CSV file that has the measurements, lat, lng and time to the users mobile device. That CSV file is then put here, where it is parsed and reorganized. Go to Data_Storage_Information if you want to know the formatting for the data. After being reformatted, A .JSON file is created labeled podData_Latitude_Longitude, where latitude and longitude are the first 4 digits measured (More than 4 digits makes uploading later data potentially erronious). From here, a Pin is created, in the Map_Script.js file, and the data is stored into the .JSON File. 

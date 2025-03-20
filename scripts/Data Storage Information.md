@@ -12,7 +12,11 @@ Name | Description | Meas# | Time | Lat | Lng | SHum | STemp | Ph | SBA MQ | H M
 
   A few notes about this. Theoretically, other data measured could be added, but that would require old fields that did not have that measurements to remain blank or to be filled with some unknown value
 
-  The data is structured so that data 1 - 4 are identifiers, which can be used to identify which pod this is refering to when uploadig data, the time that the measurements were taken, and which measurement this was in the history of the device (Meas # is added here, not in the CSV file). 
+  The data is structured so that data 1 - 6 are identifiers, which can be used to identify which pod this is refering to when uploadig data, the time that the measurements were taken, and which measurement this was in the history of the device (Meas # is added here, not in the CSV file). 
+
+  7-14 are all soil data
+
+  14-19 are all 
 
 
 

@@ -24,6 +24,10 @@ function handleFileLoad(event) {
     // Splits the file content into lines
     lines = data.split('\n');
 
+    // Save the name and description of the pod
+    var Name = document.getElementById("Name").value; //Saves Name of the pod as Name
+    var Description = document.getElementById("Description").value; //Saves Description of the pod as Description 
+    
     // Initialize the podData object
     let podData = {
         name: Name,
@@ -31,11 +35,12 @@ function handleFileLoad(event) {
         measurments: [],
     };
 
+
     // Iterates ove the lines, starting from the second line (skipping the header)
-    for (let i = 1; i < lines.length; i++) {
+    for (let i = 1; i < lines.length-2; i++) {
         const array = lines[i].split(",");
         const measurementNumber = i //Allows indexing based on which measurement this is.
-
+        // Create a measurement object, which reorders the data from the CSV file into a more logical format. Read Data Storage Information for more information.   
         const measurement = {
             measurmentNumber: measurementNumber,
             time: array[0],
@@ -44,20 +49,26 @@ function handleFileLoad(event) {
             soilHumidity: array[3],
             SoilTemperature: array[4],
             PH: array[5],
-            SulfurBenzineAmmoniaMQ: array[6],
-            hydrogenMQ: array[7],
-            carbonMonoxideMQ: array[8],
-            methaneMQ: array[9],
-            airHumidity: array[10],
-            airTemperature: array[11],
-            airPressure: array[12],
-            carbonDioxide: array[13],
-            light: array[14]
+            SulfurBenzineAmmoniaMQ: array[11],
+            hydrogenMQ: array[12],
+            carbonMonoxideMQ: array[13],
+            methaneMQ: array[14],
+            airHumidity: array[6],
+            airPressure: array[7],
+            airTemperature: array[8],
+            carbonDioxide: array[9],
+            light: array[10]
         };
+        //Creates a latitude and longitude value for us to use for plotting the pod on the map. 
+        const NewLatLng = {
+            lat: parseFloat(array[1]), 
+            lng: parseFloat(array[2])
+        };
+    
+    // Add the measurements to the podData object
+    podData.measurments.push(measurement);
+    }
 
-        // Add the measurements to the podData object
-        podData.measurments.push(measurement);
-        }
     // Log the podData object to the console
     console.log(podData);
 
@@ -71,10 +82,11 @@ function handleFileLoad(event) {
     const link = document.createElement("a");
 
     // Generate a unique file name based on lat and lng
-    const firstMeasurement = podData.measurments[0];
-    const filename = `testFileName.json`;
-    //const filename = `podData_${firstMeasurement.latitude}_${firstMeasurement.longitude}.json`;
-
+    const firstMeasurement = podData.measurments[0];       // Looks at the first list of measurements. Could look at any of them though.
+    const latitude = firstMeasurement.latitude.toFixed(4); // Limit to 4 decimal places. Read New Pod instructions for why we are using 4 digits
+    const longitude = firstMeasurement.longitude.toFixed(4); // Limit to 4 decimal places
+    const filename = `podData_${latitude}_${longitude}.json`;
+    
     // Set the download attribute with a filename
     link.download = filename;
 
@@ -91,18 +103,20 @@ function handleFileLoad(event) {
     document.body.removeChild(link);
     }
 
-//Pulls saveVars from popup HTML file and saves the variables Lat and Lng.
+//Saves the name and description of the pod and then creates the pin.
 function SavePodVars(podData) {
-    var Name = document.getElementById("Name").value; //Saves Name of the pod as Name
-    var Description = document.getElementById("Description").value; //Saves Description of the pod as Description
-
-   
 //Places podData into the console for debugging purposes.
     console.log(podData);
 //Hides the popup once the save button is pressed.
     document.getElementById("popup").style.display = "none";
-//
-    pinCreator(podData);// The end of saveVars function UPDATE WITH LAT LNG DATA
+// A global variable that map_script.js can reference to know where the pin should be placed and what to put in the description and name
+var PinPlotData ={
+    lat: NewLatLng.lat, //Latitude from NewLatLng
+    lng: NewLatLng.lng, //Longitude from NewLatLng
+    name: document.getElementById("Name").value,  //Name from the HTML Name input
+    description: document.getElementById("Description").value //Description from the HTML Description input
+}
+    pinCreator(PinPlotData);// The end of saveVars function UPDATE WITH LAT LNG DATA
 };
 
 // Called in the HTML file, prepares the site to wait for a change in the file input.
@@ -110,9 +124,8 @@ function init() {
     document.getElementById('fileInput').addEventListener('change', handleFileSelect, false);
   }
 
-//This function begins the reading of the CSV file, and once the file is fully loaded into the site, send it to handleFileLoad
 
-    
+
 
 
 
