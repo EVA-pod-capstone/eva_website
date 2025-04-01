@@ -1,0 +1,9 @@
+HOW TO RUN
+Hi.
+
+Okay so you've first gotta run the server.py
+in order to hold the file (located in scripts folder)
+in a usuable location. Open http://localhost:8000/
+Open "dynamicChart" to see the populated graph.
+Change "yAxisVariable" in line 2 to change the desired
+info.
