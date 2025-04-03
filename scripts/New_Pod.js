@@ -2,11 +2,12 @@
 // This file is used to create a new pod and save the location of the pod
 //---------------------------------------------------------------------------------//
 
+let PinLatLng;
+
 
 //The openPopup function, which is called in map_script.js, begins the opening of the popup. 
-
 function PopupCreation() {
-    document.getElementById("popup").style.display = "block";
+    document.getElementById("Add_pod_popup").style.display = "block";
 }
 //This function begins the reading of the CSV file, and once the file is fully loaded into the site, send it to handleFileLoad
 function handleFileSelect(event){
@@ -28,11 +29,21 @@ function handleFileLoad(event) {
     var Name = document.getElementById("Name").value; //Saves Name of the pod as Name
     var Description = document.getElementById("Description").value; //Saves Description of the pod as Description 
     
+
+    const firstLine = lines[1].split(",");
     // Initialize the podData object
     let podData = {
         name: Name,
         description: Description,
+        latitude: parseFloat(firstLine[1]),
+        longitude: parseFloat(firstLine[2]), 
         measurments: [],
+    };
+
+    //Creates a latitude and longitude value for us to use for plotting the pod on the map.
+    PinLatLng = {
+        lat: parseFloat(firstLine[1]), 
+        lng: parseFloat(firstLine[2])
     };
 
 
@@ -44,8 +55,6 @@ function handleFileLoad(event) {
         const measurement = {
             measurmentNumber: measurementNumber,
             time: array[0],
-            latitude: parseFloat(array[1]),
-            longitude: parseFloat(array[2]),
             soilHumidity: array[3],
             SoilTemperature: array[4],
             PH: array[5],
@@ -59,12 +68,7 @@ function handleFileLoad(event) {
             carbonDioxide: array[9],
             light: array[10]
         };
-        //Creates a latitude and longitude value for us to use for plotting the pod on the map. 
-        const NewLatLng = {
-            lat: parseFloat(array[1]), 
-            lng: parseFloat(array[2])
-        };
-    
+  
     // Add the measurements to the podData object
     podData.measurments.push(measurement);
     }
@@ -72,6 +76,9 @@ function handleFileLoad(event) {
     // Log the podData object to the console
     console.log(podData);
 
+}
+//Saves the file to the site and then sends the data to the console for debugging purposes.
+function SavePodVars(podData) {
     // Convert the podData object into a JSON string
     const podDataString = JSON.stringify(podData);
 
@@ -82,9 +89,8 @@ function handleFileLoad(event) {
     const link = document.createElement("a");
 
     // Generate a unique file name based on lat and lng
-    const firstMeasurement = podData.measurments[0];       // Looks at the first list of measurements. Could look at any of them though.
-    const latitude = firstMeasurement.latitude.toFixed(4); // Limit to 4 decimal places. Read New Pod instructions for why we are using 4 digits
-    const longitude = firstMeasurement.longitude.toFixed(4); // Limit to 4 decimal places
+    const latitude = PinLatLng.lat.toFixed(4); // Limit to 4 decimal places. Read New Pod instructions for why we are using 4 digits
+    const longitude = PinLatLng.lng.toFixed(4); // Limit to 4 decimal places
     const filename = `podData_${latitude}_${longitude}.json`;
     
     // Set the download attribute with a filename
@@ -101,18 +107,16 @@ function handleFileLoad(event) {
 
     // Remove the link from the document
     document.body.removeChild(link);
-    }
 
-//Saves the name and description of the pod and then creates the pin.
-function SavePodVars(podData) {
+
 //Places podData into the console for debugging purposes.
     console.log(podData);
 //Hides the popup once the save button is pressed.
-    document.getElementById("popup").style.display = "none";
+    document.getElementById("Add_pod_popup").style.display = "none";
 // A global variable that map_script.js can reference to know where the pin should be placed and what to put in the description and name
 var PinPlotData ={
-    lat: NewLatLng.lat, //Latitude from NewLatLng
-    lng: NewLatLng.lng, //Longitude from NewLatLng
+    lat: PinLatLng.lat, //Latitude from NewLatLng
+    lng: PinLatLng.lng, //Longitude from NewLatLng
     name: document.getElementById("Name").value,  //Name from the HTML Name input
     description: document.getElementById("Description").value //Description from the HTML Description input
 }
@@ -124,36 +128,6 @@ function init() {
     document.getElementById('fileInput').addEventListener('change', handleFileSelect, false);
   }
 
-
-
-
-
-
-
-//Creating a new pin on the map with the data from the popup. 
-//Commenting to create new function in map_script.js
-/*
-function pinCreator(podData) {
-    if(podData.lat && podData.lng) {
-
-        const markerNewPod = new AdvancedMarkerElement({
-            position: { lat: parseFloat(podData.lat), lng: parseFloat(podData.lng) },
-            map: map, 
-            title: podData.name,
-            content: podData.description,
-            gmpClickable: true,
-          });
-
-  
-        const infoWindow = new google.maps.InfoWindow({
-            content: `<h1>${podData.name}</h1><p>${podData.description}</p>`
-        });
-        
-        infoWindow.open(map, markerNewPod);
-        //This is the event listener that allows the user to click on the pin and have the description of the pod pop up.
-        //This description should contain a name, description, and other information. 
-        
-    }
-
-} //The end of podCreator Function
- */
+CloseAddPopup = () => {
+    document.getElementById("Add_pod_popup").style.display = "none";
+  }

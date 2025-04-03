@@ -1,5 +1,4 @@
-// map variables in global 
- let NewLatLng      = { lat: 39.7392, lng: -104.9903 };      
+// map variables in global      
  let NewBorderColor = "#137333";                           
  let NewFillColor   = "#137333";
  let NewTitle       = "Denver, CO";
@@ -36,18 +35,25 @@ function pinCreator(PinPlotData) {
     // Create a DOM Node for the marker content
     const contentNode = document.createElement("div");
     contentNode.style.position = "absolute"; // Changes the pin type.
-    contentNode.style.transform = "translate(-50%, -100%)"; //center the image above the marker position
+    contentNode.style.width = "40px"; // Set the Fixed width of the marker
+    contentNode.style.height = "40px"; // Set the Fixed height of the marker
+    contentNode.style.transform = "translate(-50%, -50%)"; // Center the image on marker position.
+
 
     // Changes the pin type. 
     const img = document.createElement("img");
-    img.src = "../Shroom_Image.jpg"  // Add the image URL
+    img.src = "http://localhost:8000/Shroom_Image.jpg"; // Use relative path
     img.style.width = "40px";
     img.style.height = "40px";
     img.style.borderRadius = "50%"; // Make it circular
     img.style.boxShadow = "0 0 5px rgba(0, 0, 0, 0.5)"; // Add a shadow
+    contentNode.appendChild(img);
 
-    contentNode.style.transform = "translate(-50%, -100%)";
-    contentNode.innerHTML = `<h1>${PinPlotData.name}</h1><p>${PinPlotData.description}</p>`;
+    console.log(contentNode);
+    const textContainer = document.createElement("div");
+    textContainer.innerHTML = `<h1>${PinPlotData.name}</h1><p>${PinPlotData.description}</p>`;
+    contentNode.appendChild(textContainer); // Append the text container to the content node
+
 
   const markerNewPod = new google.maps.marker.AdvancedMarkerElement({
     position: { lat: PinPlotData.lat, lng: PinPlotData.lng },
