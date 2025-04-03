@@ -12,7 +12,7 @@ Finally, we reupload all of the data to the file, and then save it again.
 
 function findFile(){
     document.getElementById("Update_pod_popup").style.display = "block";
-    updatePopup.style.display = "block"; // Show the popup
+    Update_pod_popup.style.display = "block"; // Show the popup
 }
 
 

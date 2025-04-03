@@ -3,7 +3,7 @@
 //---------------------------------------------------------------------------------//
 
 let PinLatLng;
-
+let podData;
 
 //The openPopup function, which is called in map_script.js, begins the opening of the popup. 
 function PopupCreation() {
@@ -31,8 +31,8 @@ function handleFileLoad(event) {
     
 
     const firstLine = lines[1].split(",");
-    // Initialize the podData object
-    let podData = {
+    // Initialize the podData object   
+    podData = {
         name: Name,
         description: Description,
         latitude: parseFloat(firstLine[1]),
@@ -78,9 +78,12 @@ function handleFileLoad(event) {
 
 }
 //Saves the file to the site and then sends the data to the console for debugging purposes.
-function SavePodVars(podData) {
+function SavePodVars() {
+    console.log(podData);
     // Convert the podData object into a JSON string
     const podDataString = JSON.stringify(podData);
+
+    console.log(podDataString); // Log the JSON string to the console
 
     // Create a Blob from the JSON string
     const blob = new Blob([podDataString], { type: "application/json" });
