@@ -20,7 +20,6 @@ function handleFileLoad(event) {
     console.log(event);  // logs data in the console
     //document.getElementById('fileContent').textContent = event.target.result; //Displays the file content in the site
     data = event.target.result;   //Moves the data in the file (event.target.result) to data
-    //Hides the Popup once you have pressed the save button.
     
     // Splits the file content into lines
     lines = data.split('\n');
@@ -29,7 +28,7 @@ function handleFileLoad(event) {
     var Name = document.getElementById("Name").value; //Saves Name of the pod as Name
     var Description = document.getElementById("Description").value; //Saves Description of the pod as Description 
     
-
+    // Looks at the first line of the CSV file and splits it into an array. 
     const firstLine = lines[1].split(",");
     // Initialize the podData object   
     podData = {
@@ -46,6 +45,7 @@ function handleFileLoad(event) {
         lng: parseFloat(firstLine[2])
     };
 
+    //Write CODE THAT CHECKS IF POD ALREADY EXISTS IN AllLatLng.json FILE
 
     // Iterates ove the lines, starting from the second line (skipping the header)
     for (let i = 1; i < lines.length-2; i++) {
@@ -79,7 +79,9 @@ function handleFileLoad(event) {
 }
 //Saves the file to the site and then sends the data to the console for debugging purposes.
 function SavePodVars() {
-    console.log(podData);
+
+
+    // Takes the Lat, Lng, Name, and Description and puts it into AllLatLng.json file.
     // Convert the podData object into a JSON string
     const podDataString = JSON.stringify(podData);
 
@@ -94,7 +96,7 @@ function SavePodVars() {
     // Generate a unique file name based on lat and lng
     const latitude = PinLatLng.lat.toFixed(4); // Limit to 4 decimal places. Read New Pod instructions for why we are using 4 digits
     const longitude = PinLatLng.lng.toFixed(4); // Limit to 4 decimal places
-    const filename = `podData_${latitude}_${longitude}.json`;
+    const filename = `${latitude}_${longitude}.json`;
     
     // Set the download attribute with a filename
     link.download = filename;

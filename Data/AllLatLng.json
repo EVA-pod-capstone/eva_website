@@ -1,0 +1,17 @@
+{
+    "Pins" [
+        {
+            "name": "asdf",
+            "description": "asdf",
+            "latitude": 40,
+            "longitude": -104
+        },
+        {
+            "name": "asdf",
+            "description": "asdf",
+            "latitude": 39,
+            "longitude": -103
+        }
+    ]
+
+}

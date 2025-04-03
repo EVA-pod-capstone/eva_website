@@ -42,7 +42,7 @@ function pinCreator(PinPlotData) {
 
     // Changes the pin type. 
     const img = document.createElement("img");
-    img.src = "http://localhost:8000/Shroom_Image.jpg"; // Use relative path
+    img.src = "./scripts/Shroom_Image.jpg"; // Use relative path
     img.style.width = "40px";
     img.style.height = "40px";
     img.style.borderRadius = "50%"; // Make it circular
@@ -71,13 +71,10 @@ function pinCreator(PinPlotData) {
   markerNewPod.addListener('gmp-click', () => {
     infoWindow.open(map, markerNewPod);
   });
-  console.log("Marker created successfully at:", PinPlotData.lat, PinPlotData.lng);
-} else {
-  console.error("Invalid PinPlotData:", PinPlotData);
+
 }
 
-// this is only going to work when a new marker pod is created. Once another is created, it will be inaccessable. 
-// find solution after finishing the data structuring. 
+
 // google.maps.event.addListener(markerNewPod, 'click', function() {window.location.href = marker.url;});
 
 // AIR QUALITY
@@ -110,6 +107,9 @@ var antennasCircle = new google.maps.Circle({
     },
     radius: 500
   });
-  initMap;//Refreshes map? 
+  initMap;
 }
   
+
+// something that parses through the AllLatLng.json file and then prints out all of the individual pins. 
+// Andrew needs to write code in New_Pod.js that will create and update the AllLatLng.json file every time a new pod is created. 
