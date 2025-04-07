@@ -112,4 +112,36 @@ var antennasCircle = new google.maps.Circle({
   
 
 // something that parses through the AllLatLng.json file and then prints out all of the individual pins. 
-// Andrew needs to write code in New_Pod.js that will create and update the AllLatLng.json file every time a new pod is created. 
+// Andrew needs to write code in New_Pod.js that will create and update the AllLatLng.json file every time a new pod is created.
+function addSavedPins(){
+  fetch('./Data/AllLatLng.json')
+  .then(response => response.json())  // Parse the JSON data from the response
+  .then(data => {
+    // Handle the data received from the PHP server
+    console.log(data);  // Output the data to the console (or use it in your application)
+    
+    if (data.error) {
+      console.error('Error:', data.error);  // Handle any errors returned from the PHP script
+    } else {
+      var pins = data.Pins;
+      // Iterate through array and add pins to map
+      for (let i = 0; i < pins.length; i++) {
+        pinCreator(pins[i]);
+      }
+    //   var PinPlotData ={
+    //     lat: PinLatLng.lat, //Latitude from NewLatLng
+    //     lng: PinLatLng.lng, //Longitude from NewLatLng
+    //     name: document.getElementById("Name").value,  //Name from the HTML Name input
+    //     description: document.getElementById("Description").value //Description from the HTML Description input
+    // }
+    //     pinCreator(PinPlotData);
+
+    }
+  })
+  .catch(error => {
+    // Handle any network or other errors
+    console.error('Error fetching JSON data:', error);
+  });
+  
+} 
+

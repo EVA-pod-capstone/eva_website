@@ -1,16 +1,16 @@
 {
-    "Pins" [
+    "Pins": [
         {
-            "name": "asdf",
-            "description": "asdf",
-            "latitude": 40,
-            "longitude": -104
+            "name": "hjkl",
+            "description": "hjkl",
+            "lat": 40,
+            "long": -104
         },
         {
             "name": "asdf",
             "description": "asdf",
-            "latitude": 39,
-            "longitude": -103
+            "lat": 39,
+            "long": -103
         }
     ]
 

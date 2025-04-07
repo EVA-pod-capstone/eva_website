@@ -80,7 +80,6 @@ function handleFileLoad(event) {
 //Saves the file to the site and then sends the data to the console for debugging purposes.
 function SavePodVars() {
 
-
     // Takes the Lat, Lng, Name, and Description and puts it into AllLatLng.json file.
     // Convert the podData object into a JSON string
     const podDataString = JSON.stringify(podData);
