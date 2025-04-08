@@ -88,29 +88,10 @@ function SavePodVars() {
 
     // Create a Blob from the JSON string
     const blob = new Blob([podDataString], { type: "application/json" });
-
+    fetch(`/upload.php`, {method:"POST", body:blob}).then(response => console.log(response.text()))
     // Set the download attribute with a filename
     const link = document.createElement("a");
 
-    // Generate a unique file name based on lat and lng
-    const latitude = PinLatLng.lat.toFixed(4); // Limit to 4 decimal places. Read New Pod instructions for why we are using 4 digits
-    const longitude = PinLatLng.lng.toFixed(4); // Limit to 4 decimal places
-    const filename = `${latitude}_${longitude}.json`;
-    
-    // Set the download attribute with a filename
-    link.download = filename;
-
-    // Create a URL for the Blob and set it as the href attribute
-    link.href = URL.createObjectURL(blob);
-
-    // Append the link to the document body
-    document.body.appendChild(link);
-
-    // Programmatically click the link to trigger the download
-    link.click();
-
-    // Remove the link from the document
-    document.body.removeChild(link);
 
 
 //Places podData into the console for debugging purposes.
