@@ -4,14 +4,13 @@
             "name": "hjkl",
             "description": "hjkl",
             "lat": 40,
-            "long": -104
+            "lng": -104
         },
         {
             "name": "asdf",
             "description": "asdf",
             "lat": 39,
-            "long": -103
+            "lng": -103
         }
     ]
-
 }
