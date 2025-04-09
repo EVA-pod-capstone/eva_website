@@ -6,6 +6,31 @@
  var PinElement;
  var map;
  var markerNewPod;
+const markers = [];
+let menu;
+let measurmentArray = [];
+
+fetch('./uploads/Graph_Test_File.json')
+.then(function (response) {
+  if (response.ok) {
+    return response.json();
+  } else {
+    throw new Error('Failed to fetch data');
+  }
+})
+.then(function (Graph_Test_File) {
+  console.log('Fetched data:', Graph_Test_File); // Debugging log
+   measurmentArray = Graph_Test_File.measurments; // Access the "measurements" array
+
+  if (!measurmentArray || !Array.isArray(measurmentArray)) {
+    console.error('MeasurementArray is missing or not an array:', measurmentArray);
+    return;
+  }
+
+})
+.catch(function (error) {
+  console.error('Error fetching data:', error);
+});
 
 
 //Initialize the Map
@@ -25,7 +50,19 @@ async function initMap() {
 
   });
 
-  const infoWindow = new InfoWindow();
+   // Create the menu element after the DOM is fully loaded
+    menu = document.createElement('div');
+    menu.id = 'customMenu';
+    menu.style.position = 'fixed';
+    menu.style.backgroundColor = 'white';
+    menu.style.border = '1px solid #ccc';
+    menu.style.padding = '10px';
+    menu.style.boxShadow = '0 2px 5px rgba(0, 0, 0, 0.3)';
+    menu.style.display = 'none';
+    menu.style.bottom = '0px';
+    menu.style.right = '72%';
+    menu.style.transform = 'translateX(-50%)';
+    document.body.appendChild(menu);
 }
 
 //Custom Marker for new pod
@@ -69,7 +106,35 @@ function pinCreator(PinPlotData) {
   });
 
   markerNewPod.addListener('gmp-click', () => {
-    infoWindow.open(map, markerNewPod);
+    console.log('Marker clicked!');
+      
+          // Define the measurements
+          const measurements = ['Soil_Humidity', 'Soil_Temperature', 'PH', 'Sulfur_Benzine_Ammonia_MQ', 'Hydrogen_MQ', 'CO_MQ', 'Methane_MQ', 'Air_Humidity', 'Air_Temperature', 'Air_Pressure', 'CO2', 'Light'];
+      
+          // Generate the menu content
+          let menuContent = `
+              <div style="position: relative;">
+                  <button onclick="closeMenu()" style="position: absolute; top: 5px; right: 5px; background-color: red; color: white; border: none; border-radius: 3px; padding: 5px; cursor: pointer;">X</button>
+                  <h3>${PinPlotData.name}</h3>
+                  <p>${PinPlotData.description}</p>
+                  <p><strong>Latitude:</strong> ${PinPlotData.lat}</p>
+                  <p><strong>Longitude:</strong> ${PinPlotData.lng}</p>
+                  <div>
+                      <h4>Measurements:</h4>
+          `;
+      
+          // Add buttons for each measurement
+          measurements.forEach(measurement => {
+            const functionName = `graph${measurement.replace(/\s+/g, '')}`; // Generate function name dynamically
+            menuContent += `<button onclick="${functionName}()">Graph ${measurement}</button><br>`;
+        });
+      
+          menuContent += `</div></div>`;
+      
+          // Set the menu content and display it
+          menu.innerHTML = menuContent;
+          menu.style.zIndex = '1000';
+          menu.style.display = 'block';
   });
 
 }
@@ -113,7 +178,8 @@ var antennasCircle = new google.maps.Circle({
 
 // something that parses through the AllLatLng.json file and then prints out all of the individual pins. 
 // Andrew needs to write code in New_Pod.js that will create and update the AllLatLng.json file every time a new pod is created.
-function addSavedPins(){
+function init(){
+    document.getElementById('fileInput').addEventListener('change', handleFileSelect, false);
   fetch('./Data/AllLatLng.json')
   .then(response => response.json())  // Parse the JSON data from the response
   .then(data => {
@@ -128,13 +194,7 @@ function addSavedPins(){
       for (let i = 0; i < pins.length; i++) {
         pinCreator(pins[i]);
       }
-    //   var PinPlotData ={
-    //     lat: PinLatLng.lat, //Latitude from NewLatLng
-    //     lng: PinLatLng.lng, //Longitude from NewLatLng
-    //     name: document.getElementById("Name").value,  //Name from the HTML Name input
-    //     description: document.getElementById("Description").value //Description from the HTML Description input
-    // }
-    //     pinCreator(PinPlotData);
+   
 
     }
   })
@@ -144,4 +204,81 @@ function addSavedPins(){
   });
   
 } 
+
+
+  // MENU FUNCTIONS
+  function closeMenu() {
+    menu.style.display = 'none'; // Hide the menu
+}
+
+// Measurement Functions
+function graphSoil_Humidity() {
+  console.log("Graphing SHum...");
+  PopulateGraph.createChart(measurmentArray, 'line', "soilHumidity");
+}
+
+function graphSoil_Temperature() {
+  console.log("Graphing STemp...");
+  PopulateGraph.createChart(measurmentArray, 'line', "SoilTemperature");
+
+}
+
+function graphPH() {
+  console.log("Graphing Ph...");
+  PopulateGraph.createChart(measurmentArray, 'line', "PH");
+
+}
+
+function graphSulfur_Benzine_Ammonia_MQ() {
+  console.log("Graphing SBA MQ...");
+  PopulateGraph.createChart(measurmentArray, 'line', "SulfurBenzineAmmoniaMQ");
+
+}
+
+function graphHydrogen_MQ() {
+  console.log("Graphing H MQ...");
+  PopulateGraph.createChart(measurmentArray, 'line', "hydrogenMQ");
+
+}
+
+function graphCO_MQ() {
+  console.log("Graphing CO MQ...");
+  PopulateGraph.createChart(measurmentArray, 'line', "carbonMonoxideMQ");
+
+}
+
+function graphMethane_MQ() {
+  console.log("Graphing Meth MQ...");
+  PopulateGraph.createChart(measurmentArray, 'line', "methaneMQ");
+
+}
+
+function graphAir_Humidity() {
+  console.log("Graphing AHum...");
+  PopulateGraph.createChart(measurmentArray, 'line', "airHumidity");
+
+}
+
+function graphAir_Temperature() {
+  PopulateGraph.createChart(measurmentArray, 'line', "airTemperature");
+  console.log("Graphing ATemp...");
+}
+
+function graphAir_Pressure() {
+  console.log("Graphing APress...");
+  PopulateGraph.createChart(measurmentArray, 'line', "airPressure");
+
+}
+
+function graphCO2() {
+  console.log("Graphing CO2...");
+  PopulateGraph.createChart(measurmentArray, 'line', "carbonDioxide");
+
+}
+
+function graphLight() {
+  console.log("Graphing Light...");
+  PopulateGraph.createChart(measurmentArray, 'line', "light");
+
+}
 
