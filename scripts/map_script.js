@@ -10,27 +10,30 @@ const markers = [];
 let menu;
 let measurmentArray = [];
 
-fetch('./uploads/Graph_Test_File.json')
-.then(function (response) {
-  if (response.ok) {
-    return response.json();
-  } else {
-    throw new Error('Failed to fetch data');
-  }
-})
-.then(function (Graph_Test_File) {
-  console.log('Fetched data:', Graph_Test_File); // Debugging log
-   measurmentArray = Graph_Test_File.measurments; // Access the "measurements" array
+function populateMeasArray(lat, lng){
+	fetch('./uploads/' + lat + '_' + lng + '.json')
+	.then(function (response) {
+	  if (response.ok) {
+		console.log(response);
+	    return response.json();
+	  } else {
+	    throw new Error('Failed to fetch data');
+	  }
+	})
+	.then(function (Graph_Test_File) {
+	  console.log('Fetched data:', Graph_Test_File); // Debugging log
+	   measurmentArray = Graph_Test_File.measurments; // Access the "measurements" array
 
-  if (!measurmentArray || !Array.isArray(measurmentArray)) {
-    console.error('MeasurementArray is missing or not an array:', measurmentArray);
-    return;
-  }
+	  if (!measurmentArray || !Array.isArray(measurmentArray)) {
+	    console.error('MeasurementArray is missing or not an array:', measurmentArray);
+	    return;
+	  }
 
-})
-.catch(function (error) {
-  console.error('Error fetching data:', error);
-});
+	})
+	.catch(function (error) {
+	  console.error('Error fetching data:', error);
+	});
+}
 
 
 //Initialize the Map
@@ -122,6 +125,8 @@ function pinCreator(PinPlotData) {
                   <div>
                       <h4>Measurements:</h4>
           `;
+
+	populateMeasArray(PinPlotData.lat, PinPlotData.lng);
       
           // Add buttons for each measurement
           measurements.forEach(measurement => {
