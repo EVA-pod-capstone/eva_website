@@ -109,9 +109,9 @@ var PinPlotData ={
 };
 
 // Called in the HTML file, prepares the site to wait for a change in the file input.
-function init() {
-    document.getElementById('fileInput').addEventListener('change', handleFileSelect, false);
-  }
+//function init() {
+   // document.getElementById('fileInput').addEventListener('change', handleFileSelect, false);
+  //}
 
 CloseAddPopup = () => {
     document.getElementById("Add_pod_popup").style.display = "none";
