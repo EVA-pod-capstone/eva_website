@@ -43,6 +43,7 @@ function pinCreator(PinPlotData) {
     // Changes the pin type. 
     const img = document.createElement("img");
     img.src = "./scripts/Shroom_Image.jpg"; // Use relative path
+    // "./Data/AllLatLng.json"
     img.style.width = "40px";
     img.style.height = "40px";
     img.style.borderRadius = "50%"; // Make it circular

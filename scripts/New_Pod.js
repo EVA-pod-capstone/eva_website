@@ -4,19 +4,26 @@
 
 let PinLatLng;
 let podData;
+// Called in the HTML file, prepares the site to wait for a change in the file input.
+function init() {
+    document.getElementById('fileInput').addEventListener('change', handleNewPodFileSelect, false);
+    document.getElementById('updateFileInput').addEventListener('change', handleFileSelect, false);
+  }
 
 //The openPopup function, which is called in map_script.js, begins the opening of the popup. 
 function PopupCreation() {
     document.getElementById("Add_pod_popup").style.display = "block";
 }
+
 //This function begins the reading of the CSV file, and once the file is fully loaded into the site, send it to handleFileLoad
-function handleFileSelect(event){
-    const reader = new FileReader()
-    reader.onload = handleFileLoad;
-    reader.readAsText(event.target.files[0])
+function handleNewPodFileSelect(event){
+    const newReader = new FileReader()
+    newReader.onload = handleNewPodFileLoad;
+    newReader.readAsText(event.target.files[0])
 }
 
-function handleFileLoad(event) {
+
+function handleNewPodFileLoad(event) {
     console.log(event);  // logs data in the console
     //document.getElementById('fileContent').textContent = event.target.result; //Displays the file content in the site
     data = event.target.result;   //Moves the data in the file (event.target.result) to data
@@ -43,8 +50,9 @@ function handleFileLoad(event) {
     PinLatLng = {
         lat: parseFloat(firstLine[1]), 
         lng: parseFloat(firstLine[2])
+        
     };
-
+    console.log("PinLatLng:", PinLatLng); //Logs the latitude and longitude of the pin to the console.
     //Write CODE THAT CHECKS IF POD ALREADY EXISTS IN AllLatLng.json FILE
 
     // Iterates ove the lines, starting from the second line (skipping the header)
@@ -120,18 +128,14 @@ function SavePodVars() {
     document.getElementById("Add_pod_popup").style.display = "none";
 // A global variable that map_script.js can reference to know where the pin should be placed and what to put in the description and name
 var PinPlotData ={
-    lat: PinLatLng.lat, //Latitude from NewLatLng
-    lng: PinLatLng.lng, //Longitude from NewLatLng
+    lat: PinLatLng.lat, //Latitude from PinLatLng
+    lng: PinLatLng.lng, //Longitude from PinLatLng
     name: document.getElementById("Name").value,  //Name from the HTML Name input
     description: document.getElementById("Description").value //Description from the HTML Description input
 }
     pinCreator(PinPlotData);// The end of saveVars function UPDATE WITH LAT LNG DATA
 };
 
-// Called in the HTML file, prepares the site to wait for a change in the file input.
-function init() {
-    document.getElementById('fileInput').addEventListener('change', handleFileSelect, false);
-  }
 
 CloseAddPopup = () => {
     document.getElementById("Add_pod_popup").style.display = "none";
