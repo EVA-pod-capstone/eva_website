@@ -184,8 +184,10 @@ var antennasCircle = new google.maps.Circle({
 // something that parses through the AllLatLng.json file and then prints out all of the individual pins. 
 // Andrew needs to write code in New_Pod.js that will create and update the AllLatLng.json file every time a new pod is created.
 function init(){
-    document.getElementById('fileInput').addEventListener('change', handleFileSelect, false);
-  fetch('./Data/AllLatLng.json')
+    document.getElementById('updateFileInput').addEventListener('change', handleFileSelect, false);
+      document.getElementById('fileInput').addEventListener('change', handleNewPodFileSelect, false);
+
+  fetch('./uploads/AllLatLng.json')
   .then(response => response.json())  // Parse the JSON data from the response
   .then(data => {
     // Handle the data received from the PHP server
