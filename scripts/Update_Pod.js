@@ -59,7 +59,7 @@ function checkForFile(fileName) {
         }
     })
     .then(function (jsonData){
-        console.long("file content:", jsonData);
+        console.log("file content:", jsonData);
         // Process the JSON content here
         appendDataToJSON(jsonData);
         console.log("Updated JSON object:", jsonData);

@@ -133,8 +133,38 @@ var PinPlotData ={
     name: document.getElementById("Name").value,  //Name from the HTML Name input
     description: document.getElementById("Description").value //Description from the HTML Description input
 }
-    pinCreator(PinPlotData);// The end of saveVars function UPDATE WITH LAT LNG DATA
-};
+
+pinCreator(PinPlotData);// The end of saveVars function UPDATE WITH LAT LNG DATA
+
+fetch('./uploads/AllLatLng.json')
+.then(function (response) {
+    if (response.ok) {
+        return response.json(); // Parse the JSON response
+    } else {
+        throw new Error("AllLatLng.json not found");
+    }
+})
+.then(function (AllLatLng){
+    console.log("file content:", AllLatLng);
+
+    //Append the new PinPlotData to the pins array
+    AllLatLng.pins.push(PinPlotData);
+
+    console.log("Updated AlllatLng data:", AllLatLng);
+
+    const updatedJsonString = JSON.stringify(AllLatLng); // Convert the updated object back to a JSON string
+    const updatedBlob = new Blob([updatedJsonString], { type: "application/json" }); // Create a new Blob from the updated JSON string
+    fetch('/AllLatLng.php', {method:"POST", body:blob}).then(response => console.log(response.text())) // Send the updated JSON string to the server
+
+
+
+
+
+    // Process the JSON content here
+    appendPinDataToAllLatLng(PinPlotData)
+})
+
+}
 
 
 CloseAddPopup = () => {
