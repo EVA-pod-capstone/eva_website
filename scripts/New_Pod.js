@@ -104,18 +104,29 @@ function SavePodVars() {
     document.getElementById("Add_pod_popup").style.display = "none";
 // A global variable that map_script.js can reference to know where the pin should be placed and what to put in the description and name
 var PinPlotData ={
-    lat: PinLatLng.lat, //Latitude from NewLatLng
-    lng: PinLatLng.lng, //Longitude from NewLatLng
     name: document.getElementById("Name").value,  //Name from the HTML Name input
-    description: document.getElementById("Description").value //Description from the HTML Description input
+    description: document.getElementById("Description").value, //Description from the HTML Description input
+    lat: PinLatLng.lat, //Latitude from NewLatLng
+    lng: PinLatLng.lng //Longitude from NewLatLng
 }
     pinCreator(PinPlotData);// The end of saveVars function UPDATE WITH LAT LNG DATA
-};
 
-// Called in the HTML file, prepares the site to wait for a change in the file input.
-//function init() {
-   // document.getElementById('fileInput').addEventListener('change', handleFileSelect, false);
-  //}
+ fetch('./uploads/AllLatLng.json')
+    .then(response => {
+        response.json()
+        .then(AllLatLng => {
+            console.log("file content:", AllLatLng);
+            //Append the new PinPlotData to the pins array
+            AllLatLng.Pins.push(PinPlotData);
+            console.log("Updated AlllatLng data:", AllLatLng);
+            const updatedJsonString = JSON.stringify(AllLatLng); // Convert the updated object back to a JSON string
+            const updatedBlob = new Blob([updatedJsonString], { type: "application/json" }); // Create a new Blob from the updated JSON string
+            fetch('/AllLatLng.php', {method:"POST", body:updatedBlob}).then(response => console.log(response.text())) // Send the updated JSON string to the server
+        });
+
+    });
+
+}
 
 CloseAddPopup = () => {
     document.getElementById("Add_pod_popup").style.display = "none";
