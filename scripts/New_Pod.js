@@ -4,19 +4,23 @@
 
 let PinLatLng;
 let podData;
+let variable;
 
 //The openPopup function, which is called in map_script.js, begins the opening of the popup. 
 function PopupCreation() {
     document.getElementById("Add_pod_popup").style.display = "block";
 }
+
+
 //This function begins the reading of the CSV file, and once the file is fully loaded into the site, send it to handleFileLoad
-function handleFileSelect(event){
-    const reader = new FileReader()
-    reader.onload = handleFileLoad;
-    reader.readAsText(event.target.files[0])
+function handleNewPodFileSelect(event){
+    const newReader = new FileReader()
+    newReader.onload = handleNewPodFileLoad;
+    newReader.readAsText(event.target.files[0])
 }
 
-function handleFileLoad(event) {
+
+function handleNewPodFileLoad(event) {
     console.log(event);  // logs data in the console
     //document.getElementById('fileContent').textContent = event.target.result; //Displays the file content in the site
     data = event.target.result;   //Moves the data in the file (event.target.result) to data
