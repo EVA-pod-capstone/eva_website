@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html>
   <head>
-   <script src="https://maps.googleapis.com/maps/api/js?key= &amp;loading=async&amp;libraries=visualization,places&amp;callback=initMap" async="async" defer="defer"></script>
+   <script src="https://maps.googleapis.com/maps/api/js?key=&amp;loading=async&amp;libraries=visualization,places&amp;callback=initMap" async="async" defer="defer"></script>
    <script src="./scripts/map_script.js"></script>
    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-   <script src="./scripts/script.js"></script>
      <script src="./scripts/PopulateGraph.js"></script>
    <script src="./scripts/New_Pod.js"></script>
    <script src="./scripts/Update_Pod.js"></script>
@@ -46,23 +45,53 @@
 <body onload="init()">
   <div>
     <h1>Environmental Variance Analyzer</h1>
-  <input id="Add_Eva_Pod" type="button" value="Add EVA Pod" onclick="PopupCreation();"/>
-  <div id="Add_pod_popup" style="display: none;">
-    <label for="Name">Name:</label>     <!--labels Name and creates Name variable-->
-    <input type="text" id="Name"><br>
-    <label for="Description">Description:</label> <!--labels Description and creates Description variable-->
-    <input type="text" id="Description"><br>
-    <input id="fileInput" type = "file" name = "file"></button>
-    <input id="SavePodData" type="button" value="Save" onclick="SavePodVars();"/>
-    <input id="Cancel_Popup" type="button" value="Cancel" onclick="CloseAddPopup();"/>
-  </div>
-  <input id="Update_Eva_Pod" type="button" value="Update EVA Pod" onclick="findFile();"/>
-  <div id="Update_pod_popup" style="display: none;">
-    <input id="UpdatefileInput" type = "file" name = "file"></button>
-    <input id="UpdatePodData" type="button" value="Save" onclick="SavePodVars();"/>
-    <input id="Cancel_Update_Popup" type="button" value="Cancel" onclick="CloseUpdatePopup();"/>
-  </div>
-  <div id="contentBox" style="margin:0px auto; width:100%; height:80%;"></div>
+  <!-- Add Pod Popup -->
+
+    <input id="Add_Eva_Pod" type="button" value="Add EVA Pod" onclick="PopupCreation();"/>
+
+    <div id="Add_pod_popup" style="display: none;">
+
+      <!--labels Name and creates Name variable-->
+
+      <label for="Name">Name:</label>     
+
+      <input type="text" id="Name"><br>
+
+      <!--labels Description and creates Description variable-->
+
+      <label for="Description">Description:</label> 
+
+      <input type="text" id="Description"><br>
+
+      <input id="fileInput" type = "file" name = "file"></button>
+
+      <input id="SavePodData" type="button" value="Save" onclick="SavePodVars();"/>
+
+      <input id="Cancel_Popup" type="button" value="Cancel" onclick="CloseAddPopup();"/>
+
+    </div>
+
+
+
+    <!-- Update Pod Popup -->
+
+    <input id="Update_Eva_Pod" type="button" value="Update EVA Pod" onclick="findFile();"/>
+
+    <div id="Update_pod_popup" style="display: none;">
+
+      <input id="updateFileInput" type = "file" name = "updateFile"></button>
+
+      <input id="updatePodData" type="button" value="Save" onclick="SaveUpdatedPod();"/> <!--onclick="SavePodVars();"-->
+
+      <input id="Cancel_Update_Popup" type="button" value="Cancel" onclick="CloseUpdatePopup();"/>
+
+    </div>
+
+
+
+    <!-- Map and Data Manager -->
+
+    <div id="contentBox" style="margin:0px auto; width:100%; height:80%;"></div>
     <!-- columns divs, float left, no margin so there is no space between column, width=1/3 -->
     <div id="map" class="column" style="width:97%; height:500px;"></div>
     <div id="data-manager" class="column">
