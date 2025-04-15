@@ -33,7 +33,7 @@ function handleFileLoad(event) {
     const lines = data.split("\n");
 
     // Pulls the first line of data into another array for us to use to check if the JSON file exists.
-    const firstLine = lines[1].split(",");
+    const firstLine = lines[lines.length-3].split(","); // use last data line instead of first
 
     // Creates a latitude and longitude value for us to use for plotting the pod on the map.
     const PinLatLng = {
@@ -77,7 +77,11 @@ function handleFileLoad(event) {
         };
   
     // Add the measurements to the podData object
-    newPodData.measurments.push(measurement);
+    if (array[0].startsWith('0-00-00')){  // check that the time is valid before adding
+            console.log('No measurement time, skipping');
+        } else {
+            newPodData.measurments.push(measurement);
+        }  
     }
 
     // Log the podData object to the console
