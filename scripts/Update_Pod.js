@@ -53,11 +53,12 @@ function handleFileLoad(event) {
         longitude: parseFloat(firstLine[2]), 
         measurments: [],
     };
-    
+
+    var measurementNumber = 1;
      // Iterates ove the lines, starting from the second line (skipping the header)
     for (let i = 1; i < lines.length-2; i++) {
         const array = lines[i].split(",");
-        const measurementNumber = i //Allows indexing based on which measurement this is.
+       // const measurementNumber = i //Allows indexing based on which measurement this is.
         // Create a measurement object, which reorders the data from the CSV file into a more logical format. Read Data Storage Information for more information.   
         const measurement = {
             measurmentNumber: measurementNumber,
@@ -78,9 +79,10 @@ function handleFileLoad(event) {
   
     // Add the measurements to the podData object
     if (array[0].startsWith('0-00-00')){  // check that the time is valid before adding
-            console.log('No measurement time, skipping');
+            console.log('No measurement time, skipping');  // Skips
         } else {
             newPodData.measurments.push(measurement);
+            measurementNumber = measurementNumber + 1;
         }  
     }
 
