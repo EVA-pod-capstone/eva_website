@@ -11,7 +11,9 @@ let menu;
 let measurmentArray = [];
 
 function populateMeasArray(lat, lng){
-	fetch('./uploads/' + lat + '_' + lng + '.json')
+     var fileName = `${lat.toFixed(4)}_${lng.toFixed(4)}.json`;
+
+	fetch('./uploads/' + fileName)
 	.then(function (response) {
 	  if (response.ok) {
 		console.log(response);
@@ -56,14 +58,13 @@ async function initMap() {
    // Create the menu element after the DOM is fully loaded
     menu = document.createElement('div');
     menu.id = 'customMenu';
-    menu.style.position = 'fixed';
+    menu.style.position = 'relative';
     menu.style.backgroundColor = 'white';
     menu.style.border = '1px solid #ccc';
     menu.style.padding = '10px';
     menu.style.boxShadow = '0 2px 5px rgba(0, 0, 0, 0.3)';
     menu.style.display = 'none';
-    menu.style.bottom = '0px';
-    menu.style.right = '72%';
+    menu.style.right = '85%';
     menu.style.transform = 'translateX(-50%)';
     document.body.appendChild(menu);
 }
