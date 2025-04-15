@@ -11,6 +11,7 @@ Finally, we reupload all of the data to the file, and then save it again.
 // Global object to store uploaded files
 //let oldJsonData;
 //let uploadedFiles = {};
+let jsonData;
 let fileName;
 let newPodData;
 
@@ -46,6 +47,19 @@ function handleFileLoad(event) {
         return;
     }
     
+    // Creates the name of the file that we are looking to put our data into.
+    fileName = `${PinLatLng.lat.toFixed(4)}_${PinLatLng.lng.toFixed(4)}.json`;
+    console.log("Looking for file:", fileName);
+    // Pull the file with the correct name from the server and put the data from it into jsonData
+    fetch('./uploads/' + fileName )
+    .then(response => {
+        response.json()
+        .then(fileData => {
+        jsonData = fileData; // Store the JSON data in a global variable
+        console.log("Previous data:", jsonData);
+        });
+    });
+
      newPodData = {
         name: Name,
         description: Description,
@@ -54,8 +68,8 @@ function handleFileLoad(event) {
         measurments: [],
     };
 
-    var measurementNumber = 1;
-     // Iterates ove the lines, starting from the second line (skipping the header)
+    var measurementNumber = jsonData.measurments.length + 1; //Allows indexing based on which measurement this is.
+     // Iterates over the lines, starting from the second line (skipping the header)
     for (let i = 1; i < lines.length-2; i++) {
         const array = lines[i].split(",");
        // const measurementNumber = i //Allows indexing based on which measurement this is.
@@ -89,26 +103,12 @@ function handleFileLoad(event) {
     // Log the podData object to the console
     console.log(newPodData);
 
-    // Creates the name of the file that we are looking to put our data into.
-    fileName = `${PinLatLng.lat.toFixed(4)}_${PinLatLng.lng.toFixed(4)}.json`;
-    console.log("Looking for file:", fileName);
-    SaveUpdatedPod();
+    appendDataToJson(jsonData);
 }
 
 
 function SaveUpdatedPod() {
-    fetch('./uploads/' + fileName )
-    .then(response => {
-        response.json()
-        .then(jsonData => {
-        console.log("file content:", jsonData);
-        console.log("old json content:", jsonData);
-        // Process the JSON content here
-        appendDataToJSON(jsonData);
-        // Save the updated JSON object to the server
-        });
 
-    });
 };
 
     

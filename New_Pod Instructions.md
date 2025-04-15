@@ -36,8 +36,14 @@ The .JSON Files first two inputs are the name and description, which is used for
 
 New_Pod Information
 
-Hello User! If you are reading this, you are working on server/backend code, and for that I am eternally sorry. Hopefully though, this will help you find the issue in the code, or how this code is not working with yours. 
+Hello User! If you are reading this, you are working on server/backend code, and for that I am eternally sorry. Hopefully though, this will help you find the issue(s) in the code, or help determine why this code is not working with yours. 
 
 New_Pod.js was designed to allow the user to easily create a new pod on the map, and with it a seperate .JSON file for managing data within the server. 
+
+The code flow is as follows: First, we take the csv file that is created by the EVA Pod (Look at Hardware_Setup.md for more information about how the hardware that connects to this site should bearranged  so that you can get the correct CSV file for this script) and we read the information in, seperating it line by line.
+
+ Then we take that information and separate off a few important pieces of information, (Name, Description, Latitude, and Longitude), which are used to describe the location of the pin, and (Measurements), which are the actual measurments from the pod. The Location information is used by the server to plot the pins, and the measurments are used to update the json file that all of the data is stored in. This means that we have a 
+
+
 
 Our current setup is as follows. We have the EVA Pod (V1? The finished product from our Capstone), connected to a phone, which is then connected to the internet, or sent to a computer connected to the internet. The user will start by uploading time, lat and longitude to the EVA pod (only for the first measurments gathered, it is then stored in the pod). The EVA pod then outputs a CSV file that has the measurements, lat, lng and time to the users mobile device. That CSV file is then put here, where it is parsed and reorganized. Go to Data_Storage_Information if you want to know the formatting for the data. After being reformatted, A .JSON file is created labeled podData_Latitude_Longitude, where latitude and longitude are the first 4 digits measured (More than 4 digits makes uploading later data potentially erronious). From here, a Pin is created, in the Map_Script.js file, and the data is stored into the .JSON File. 
