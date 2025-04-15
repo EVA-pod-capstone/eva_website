@@ -25,6 +25,12 @@ document.addEventListener('DOMContentLoaded', function () {
             y: {
               beginAtZero: true
             }
+            x: {
+				type: 'linear',
+				ticks: {
+					stepsize: 1
+				}
+			}
           },
           maintainAspectRatio: false
         }
