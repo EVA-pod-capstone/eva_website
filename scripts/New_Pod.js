@@ -33,7 +33,7 @@ function handleNewPodFileLoad(event) {
     var Description = document.getElementById("Description").value; //Saves Description of the pod as Description 
     
     // Looks at the first line of the CSV file and splits it into an array. 
-    const firstLine = lines[1].split(",");
+    const firstLine = lines[lines.length-3].split(","); // use last data line instead of first
     // Initialize the podData object   
     podData = {
         name: Name,
@@ -48,8 +48,6 @@ function handleNewPodFileLoad(event) {
         lat: parseFloat(firstLine[1]), 
         lng: parseFloat(firstLine[2])
     };
-
-    //Write CODE THAT CHECKS IF POD ALREADY EXISTS IN AllLatLng.json FILE
 
     // Iterates ove the lines, starting from the second line (skipping the header)
     for (let i = 1; i < lines.length-2; i++) {
@@ -74,8 +72,13 @@ function handleNewPodFileLoad(event) {
         };
   
     // Add the measurements to the podData object
-    podData.measurments.push(measurement);
+    if (array[0].startsWith('0-00-00')){  // check that the time is valid before adding
+            console.log('No measurement time, skipping');
+        } else {
+            podData.measurments.push(measurement);
+        } 
     }
+    
 
     // Log the podData object to the console
     console.log(podData);
