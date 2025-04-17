@@ -122,9 +122,10 @@ function pinCreator(PinPlotData) {
                   <p>${PinPlotData.description}</p>
                   <p><strong>Latitude:</strong> ${PinPlotData.lat}</p>
                   <p><strong>Longitude:</strong> ${PinPlotData.lng}</p>
+                  <button onclick="${functionName}()">Add STELLA data</button><br> 
                   <div>
                       <h4>Measurements:</h4>
-          `;
+          `; // TODO make button to upload stella data and plot it
 
 	populateMeasArray(PinPlotData.lat, PinPlotData.lng);
       
