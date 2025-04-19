@@ -4,6 +4,7 @@
 let stellaData;
 let lat;
 let long;
+let data;
 
 //The openPopup function, which is called in map_script.js, begins the opening of the popup. 
 function stellaPopup(lat_from_eva, long_from_eva) {
@@ -25,14 +26,34 @@ function handleStellaFileLoad(event) {
     console.log(event);  // logs data in the console
     // what if instead we just read the old file and then concantenate the new data,
     // and have a button for grahing it that plots all the measurements over the full spectrum
+    
     //document.getElementById('fileContent').textContent = event.target.result; //Displays the file content in the site
     data = event.target.result;   //Moves the data in the file (event.target.result) to data
     
+    // Initialize the stellaData object   
+    stellaData = {'latitude': lat, 'longitude': long, 'measurements': []};
+    var fileName = `${lat.toFixed(4)}_${long.toFixed(4)}_stella.json`;
+    
+	fetch('./uploads/' + fileName )
+		.then(response => {
+        response.json()
+        .then(jsonData => {
+			console.log("old stella json content:", jsonData);
+			stellaData = jsonData;
+			parseData();
+        });
+    })
+    .catch(err => {
+		console.log('no existing stella data, making new file');
+		parseData();
+	});
+    
+}
+
+function parseData(){
     // Splits the file content into lines
     lines = data.split('\n');
 
-    // Initialize the stellaData object   
-    stellaData = {'latitude': lat, 'longitude': long, 'measurements': []};
     var measurement = {'wavelengths': [], 'irradiance_stella_cal': [], 'irradiance_factory_cal': []};
     
     // Iterates over the lines, starting from the third line (skipping the header and first line break)
