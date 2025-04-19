@@ -11,7 +11,9 @@ let menu;
 let measurmentArray = [];
 
 function populateMeasArray(lat, lng){
-	fetch('./uploads/' + lat + '_' + lng + '.json')
+     var fileName = `${lat.toFixed(4)}_${lng.toFixed(4)}.json`;
+
+	fetch('./uploads/' + fileName)
 	.then(function (response) {
 	  if (response.ok) {
 		console.log(response);
@@ -56,15 +58,18 @@ async function initMap() {
    // Create the menu element after the DOM is fully loaded
     menu = document.createElement('div');
     menu.id = 'customMenu';
-    menu.style.position = 'fixed';
+    menu.style.position = 'absolute';
     menu.style.backgroundColor = 'white';
     menu.style.border = '1px solid #ccc';
     menu.style.padding = '10px';
     menu.style.boxShadow = '0 2px 5px rgba(0, 0, 0, 0.3)';
     menu.style.display = 'none';
-    menu.style.bottom = '0px';
-    menu.style.right = '72%';
-    menu.style.transform = 'translateX(-50%)';
+    menu.style.right = '20px';
+    menu.style.top = '650px';
+    menu.style.transform = 'translateX(0%)';
+    menu.style.width = '280px';
+    menu.style.height = '480px';
+
     document.body.appendChild(menu);
 }
 
@@ -116,14 +121,14 @@ function pinCreator(PinPlotData) {
       
           // Generate the menu content
           let menuContent = `
-              <div style="position: relative;">
+              <div style="position: fixed;">
                   <button onclick="closeMenu()" style="position: absolute; top: 5px; right: 5px; background-color: red; color: white; border: none; border-radius: 3px; padding: 5px; cursor: pointer;">X</button>
                   <h3>${PinPlotData.name}</h3>
                   <p>${PinPlotData.description}</p>
                   <p><strong>Latitude:</strong> ${PinPlotData.lat}</p>
                   <p><strong>Longitude:</strong> ${PinPlotData.lng}</p>
-                  <button onclick="stellaPopup(${PinPlotData.lat}, ${PinPlotData.long})">Add STELLA data</button><br> 
-                  <button onclick="stellaPlot(${PinPlotData.lat}, ${PinPlotData.long})">Graph STELLA data</button><br> 
+                  <button onclick="stellaPopup(${PinPlotData.lat}, ${PinPlotData.lng})">Add STELLA data</button><br> 
+                  <button onclick="stellaPlot(${PinPlotData.lat}, ${PinPlotData.lng})">Graph STELLA data</button><br> 
 
                   <div>
                       <h4>Measurements:</h4>
@@ -293,4 +298,3 @@ function graphLight() {
   PopulateGraph.createChart(measurmentArray, 'line', "light");
 
 }
-
