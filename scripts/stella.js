@@ -36,18 +36,18 @@ function handleStellaFileLoad(event) {
     
 	fetch('./uploads/' + fileName )
 		.then(response => {
-        response.json()
-        .then(jsonData => {
-			console.log("old stella json content:", jsonData);
-			stellaData = jsonData;
-			parseData();
-        });
-    })
-    .catch(err => {
-		console.log('no existing stella data, making new file');
-		parseData();
-	});
-    
+			if (response.ok) {
+				response.json()
+				.then(jsonData => {
+					console.log("old stella json content:", jsonData);
+					stellaData = jsonData;
+					parseData();
+				});
+		  } else {
+			  console.log("no existing data found");
+				parseData();
+		  }
+    }) 
 }
 
 function parseData(){
