@@ -68,7 +68,7 @@ async function initMap() {
     menu.style.top = '650px';
     menu.style.transform = 'translateX(0%)';
     menu.style.width = '280px';
-    menu.style.height = '480px';
+    menu.style.height = '520px';
 
     document.body.appendChild(menu);
 }
@@ -115,6 +115,7 @@ function pinCreator(PinPlotData) {
 
   markerNewPod.addListener('gmp-click', () => {
     console.log('Marker clicked!');
+    document.getElementById("stella-plot-div").style.display = "none";
       
           // Define the measurements
           const measurements = ['Soil_Humidity', 'Soil_Temperature', 'PH', 'Sulfur_Benzine_Ammonia_MQ', 'Hydrogen_MQ', 'CO_MQ', 'Methane_MQ', 'Air_Humidity', 'Air_Temperature', 'Air_Pressure', 'CO2', 'Light'];
