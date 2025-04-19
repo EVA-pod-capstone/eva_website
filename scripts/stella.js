@@ -117,7 +117,17 @@ function stellaPlot(lat, long){
 							}
 							plotData.push(trace);
 				}
-					var layout = {title: {text: 'STELLA spectrometer data'}, height: 600, width: 900};
+					var layout = {title: {text: 'STELLA spectrometer data'}, height: 600, width: 900, 
+						xaxis: {
+							title: {
+							  text: 'Wavelength (nm)'
+							},
+						  },
+						  yaxis: {
+							title: {
+							  text: 'Irradiance (uW/(cm^2))'
+							},
+						  }};
 				Plotly.newPlot('stella-plot-div', plotData, layout);
 				document.getElementById("stella-plot-div").style.display = "block";
 					
