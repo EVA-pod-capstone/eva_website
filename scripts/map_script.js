@@ -123,6 +123,8 @@ function pinCreator(PinPlotData) {
                   <p><strong>Latitude:</strong> ${PinPlotData.lat}</p>
                   <p><strong>Longitude:</strong> ${PinPlotData.lng}</p>
                   <button onclick="stellaPopup(${PinPlotData.lat}, ${PinPlotData.long})">Add STELLA data</button><br> 
+                  <button onclick="stellaPlot(${PinPlotData.lat}, ${PinPlotData.long})">Graph STELLA data</button><br> 
+
                   <div>
                       <h4>Measurements:</h4>
           `; 

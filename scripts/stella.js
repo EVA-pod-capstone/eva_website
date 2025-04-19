@@ -1,7 +1,6 @@
 // New_Pod.js
 // This file is used to create a new pod and save the location of the pod
 //---------------------------------------------------------------------------------//
-
 let stellaData;
 let lat;
 let long;
@@ -25,34 +24,30 @@ function handleSTELLAFileSelect(event){
 function handleStellaFileLoad(event) {
     console.log(event);  // logs data in the console
     // what if instead we just read the old file and then concantenate the new data,
-    // and have 
+    // and have a button for grahing it that plots all the measurements over the full spectrum
     //document.getElementById('fileContent').textContent = event.target.result; //Displays the file content in the site
     data = event.target.result;   //Moves the data in the file (event.target.result) to data
     
     // Splits the file content into lines
     lines = data.split('\n');
 
-    // Looks at the first line of the CSV file and splits it into an array. 
-    const headers = lines[0].split(","); // get headers
-
     // Initialize the stellaData object   
-    stellaData = {
-        latitude: lat,
-        longitude: long, 
-        measurments: [],
-    };
+    stellaData = [];
+    var measurement = {'wavelengths': [], 'irradiance_stella_cal': [], 'irradiance_factory_cal': []};
     
-
     // Iterates over the lines, starting from the second line (skipping the header)
     for (let i = 1; i < lines.length-1; i++) {
         const array = lines[i].split(",");
-        //const measurementNumber = i //Allows indexing based on which measurement this is.
-        // Create a measurement object, which reorders the data from the CSV file into a more logical format. Read Data Storage Information for more information.   
-        const measurement = {};
-        for (let j = 1; j < lines.length-1; j++) {
-            measurement[headers[j]] = array[j];
+        if (array[6] == 'line break'){
+            stellaData.push(measurement);
+            measurement = {'wavelengths': [], 'irradiance_stella_cal': [], 'irradiance_factory_cal': []};
+        } else {
+            measurement['time'] = array[0];
+            measurement['uid'] = array[2];
+            measurement['wavelengths'].push(array[7]);
+            measurement['irradiance_stella_cal'].push(array[9]);
+            measurement['irradiance_factory_cal'].push(array[11]);
         }
-        stellaData.measurments.push(measurement);
     }
     
     // Log the podData object to the console
