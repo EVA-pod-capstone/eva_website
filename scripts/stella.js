@@ -97,6 +97,37 @@ function SaveStellaData() {
 
 }
 
+function stellaPlot(lat, long){
+	var fileName = `${lat.toFixed(4)}_${long.toFixed(4)}_stella.json`;
+    
+	fetch('./uploads/' + fileName )
+		.then(response => {
+			if (response.ok) {
+				response.json()
+				.then(jsonData => {
+					var trace = {};
+					var plotData = [];
+					console.log("stella json content:", jsonData);
+					measurements = jsonData.measurements;
+					for (let i = 0; i < measurements.length; i++) {
+						trace = {x: measurements[i].wavelengths,
+								y: measurements[i].irradiance_factory_cal,
+								mode: 'lines',
+								name: measurements[i].time,
+							}
+							plotData.push(trace);
+				}
+					var layout = {title: {text: 'STELLA spectrometer data'}, height: 600, width: 900};
+				Plotly.newPlot('stella-plot-div', plotData, layout);
+				document.getElementById("stella-plot-div").style.display = "block";
+					
+				});
+		  } else {
+			  alert("no stella data found");
+		  }
+    }) 
+}
+
 CloseStellaPopup = () => {
     document.getElementById("stella_popup").style.display = "none";
   }
