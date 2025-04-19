@@ -122,10 +122,10 @@ function pinCreator(PinPlotData) {
                   <p>${PinPlotData.description}</p>
                   <p><strong>Latitude:</strong> ${PinPlotData.lat}</p>
                   <p><strong>Longitude:</strong> ${PinPlotData.lng}</p>
-                  <button onclick="${functionName}()">Add STELLA data</button><br> 
+                  <button onclick="stellaPopup(${PinPlotData.lat}, ${PinPlotData.long})">Add STELLA data</button><br> 
                   <div>
                       <h4>Measurements:</h4>
-          `; // TODO make button to upload stella data and plot it
+          `; 
 
 	populateMeasArray(PinPlotData.lat, PinPlotData.lng);
       
@@ -187,6 +187,8 @@ var antennasCircle = new google.maps.Circle({
 function init(){
     document.getElementById('updateFileInput').addEventListener('change', handleFileSelect, false);
       document.getElementById('fileInput').addEventListener('change', handleNewPodFileSelect, false);
+      document.getElementById('stellaFileInput').addEventListener('change', handleSTELLAFileSelect, false);
+
 
   fetch('./uploads/AllLatLng.json')
   .then(response => response.json())  // Parse the JSON data from the response

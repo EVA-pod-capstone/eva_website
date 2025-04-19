@@ -101,8 +101,6 @@ function SavePodVars() {
     // Set the download attribute with a filename
     const link = document.createElement("a");
 
-
-
 //Places podData into the console for debugging purposes.
     console.log(podData);
 //Hides the popup once the save button is pressed.
