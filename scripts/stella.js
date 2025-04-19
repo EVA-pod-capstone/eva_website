@@ -32,21 +32,21 @@ function handleStellaFileLoad(event) {
     lines = data.split('\n');
 
     // Initialize the stellaData object   
-    stellaData = [];
+    stellaData = {'latitude': lat, 'longitude': long, 'measurements': []};
     var measurement = {'wavelengths': [], 'irradiance_stella_cal': [], 'irradiance_factory_cal': []};
     
-    // Iterates over the lines, starting from the second line (skipping the header)
-    for (let i = 1; i < lines.length-1; i++) {
+    // Iterates over the lines, starting from the third line (skipping the header and first line break)
+    for (let i = 2; i < lines.length-1; i++) {
         const array = lines[i].split(",");
         if (array[6] == 'line break'){
-            stellaData.push(measurement);
+            stellaData['measurements'].push(measurement);
             measurement = {'wavelengths': [], 'irradiance_stella_cal': [], 'irradiance_factory_cal': []};
         } else {
             measurement['time'] = array[0];
-            measurement['uid'] = array[2];
-            measurement['wavelengths'].push(array[7]);
-            measurement['irradiance_stella_cal'].push(array[9]);
-            measurement['irradiance_factory_cal'].push(array[11]);
+            measurement['uid'] = array[2].trim();
+            measurement['wavelengths'].push(parseInt(array[7]));
+            measurement['irradiance_stella_cal'].push(parseFloat(array[9]));
+            measurement['irradiance_factory_cal'].push(parseFloat(array[11]));
         }
     }
     
