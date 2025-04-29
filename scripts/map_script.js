@@ -72,6 +72,7 @@ async function initMap() {
 
     document.body.appendChild(menu);
 }
+window.initMap = initMap;
 
 //Custom Marker for new pod
 //pin for clicking
@@ -203,7 +204,7 @@ function init(){
   .then(data => {
     // Handle the data received from the PHP server
     console.log(data);  // Output the data to the console (or use it in your application)
-    
+    stellaPlot
     if (data.error) {
       console.error('Error:', data.error);  // Handle any errors returned from the PHP script
     } else {
@@ -232,70 +233,70 @@ function init(){
 // Measurement Functions
 function graphSoil_Humidity() {
   console.log("Graphing SHum...");
-  PopulateGraph.createChart(measurmentArray, 'line', "soilHumidity");
+createChart(measurmentArray,"soilHumidity");
 }
 
 function graphSoil_Temperature() {
   console.log("Graphing STemp...");
-  PopulateGraph.createChart(measurmentArray, 'line', "SoilTemperature");
+createChart(measurmentArray,"SoilTemperature");
 
 }
 
 function graphPH() {
   console.log("Graphing Ph...");
-  PopulateGraph.createChart(measurmentArray, 'line', "PH");
+createChart(measurmentArray,"PH");
 
 }
 
 function graphSulfur_Benzine_Ammonia_MQ() {
   console.log("Graphing SBA MQ...");
-  PopulateGraph.createChart(measurmentArray, 'line', "SulfurBenzineAmmoniaMQ");
+createChart(measurmentArray,"SulfurBenzineAmmoniaMQ");
 
 }
 
 function graphHydrogen_MQ() {
   console.log("Graphing H MQ...");
-  PopulateGraph.createChart(measurmentArray, 'line', "hydrogenMQ");
+createChart(measurmentArray,"hydrogenMQ");
 
 }
 
 function graphCO_MQ() {
   console.log("Graphing CO MQ...");
-  PopulateGraph.createChart(measurmentArray, 'line', "carbonMonoxideMQ");
+createChart(measurmentArray,"carbonMonoxideMQ");
 
 }
 
 function graphMethane_MQ() {
   console.log("Graphing Meth MQ...");
-  PopulateGraph.createChart(measurmentArray, 'line', "methaneMQ");
+createChart(measurmentArray,"methaneMQ");
 
 }
 
 function graphAir_Humidity() {
   console.log("Graphing AHum...");
-  PopulateGraph.createChart(measurmentArray, 'line', "airHumidity");
+createChart(measurmentArray,"airHumidity");
 
 }
 
 function graphAir_Temperature() {
-  PopulateGraph.createChart(measurmentArray, 'line', "airTemperature");
+createChart(measurmentArray,"airTemperature");
   console.log("Graphing ATemp...");
 }
 
 function graphAir_Pressure() {
   console.log("Graphing APress...");
-  PopulateGraph.createChart(measurmentArray, 'line', "airPressure");
+createChart(measurmentArray,"airPressure");
 
 }
 
 function graphCO2() {
   console.log("Graphing CO2...");
-  PopulateGraph.createChart(measurmentArray, 'line', "carbonDioxide");
+createChart(measurmentArray,"carbonDioxide");
 
 }
 
 function graphLight() {
   console.log("Graphing Light...");
-  PopulateGraph.createChart(measurmentArray, 'line', "light");
+createChart(measurmentArray,"light");
 
 }
