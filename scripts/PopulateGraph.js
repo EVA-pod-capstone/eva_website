@@ -1,34 +1,45 @@
-document.addEventListener('DOMContentLoaded', function () {
-  console.log("in PopulateGraph.js");
-  const ctx = document.getElementById('myGraph').getContext('2d');
-  window.PopulateGraph = {
-    createChart: function (data, type, yAxisVariable) {
-      console.log("in createChart");
-      if (!Array.isArray(data)) {
+function createChart(data, yAxisVariable) {
+    if (!Array.isArray(data)) {
         console.error('Expected data to be an array, but got:', data);
         return;
-      }
-
-      new Chart(ctx, {
-        type: type,
-        data: {
-          labels: data.map(row => row.time), // Access "time" field in each measurement
-          datasets: [{
-            label: yAxisVariable,
-            data: data.map(row => parseFloat(row[yAxisVariable])), // Access the yAxisVariable dynamically and parse as float
-            borderWidth: 1
-          }]
-        },
-        options: {
-          responsive: true,
-          scales: {
-            y: {
-              beginAtZero: true
-            }
-          },
-          maintainAspectRatio: false
-        }
-      });
     }
-  };
-});
+
+    const xValues = [];
+    const yValues = [];
+
+    for (let i = 0; i < data.length; i++) {
+        const point = data[i];
+        xValues.push(point.time); // Make sure `time` exists in your data
+        yValues.push(point[yAxisVariable]);
+    }
+
+    const trace = {
+        x: xValues,
+        y: yValues,
+        mode: 'lines+markers',
+        name: yAxisVariable,
+        type: 'scatter'
+    };
+
+    const layout = {
+        title: { text: 'EVA Pod Data' },
+        height: 600,
+        width: 900,
+        xaxis: {
+            title: {
+                text: 'Time (year-month-day hour-minute-second)'
+            },
+                type: 'date',
+    tickformat: '%Y-%m-%d %H:%M:%S',
+    tickangle: -20
+        },
+        yaxis: {
+            title: {
+                text: yAxisVariable
+            }
+        }
+    };
+
+    Plotly.newPlot('EVA-plot-div', [trace], layout);
+    document.getElementById("EVA-plot-div").style.display = "block";
+}
