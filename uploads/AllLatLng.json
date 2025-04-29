@@ -1,16 +1,1 @@
-{
-    "Pins": [
-        {
-            "name": "hjkl",
-            "description": "hjkl",
-            "lat": 40,
-            "lng": -104
-        },
-        {
-            "name": "asdf",
-            "description": "asdf",
-            "lat": 39,
-            "lng": -103
-        }
-    ]
-}
+{"Pins":[{"name":"Eva test 2","description":"uploading file","lat":39,"lng":-103},{"name":"EVA test 3","description":"updating pod data","lat":40,"lng":-104},{"name":"EVA test 1","description":"test bad data entries","lat":40.06,"lng":-105.18},{"name":"Capstone Lab","description":"","lat":40.01,"lng":-105.26}]}
