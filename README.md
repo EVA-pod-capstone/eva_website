@@ -1,4 +1,4 @@
-# EVA website
+# [EVA Website](https://github.com/EVA-pod-capstone/eva_website)
 
 This is the code for the EVA Online website. We hosted it on a Raspberry Pi for our project, instructions for which can be found at https://www.raspberrypi.com/documentation/computers/remote-access.html#set-up-an-apache-web-server. This code can be put directly into /var/www/html on the Pi if going this route. There must be permissions for anyone to write to the uploaded data folder. You also must provide a Google Maps API key in the top of the index.html file to properly load the map.
 
